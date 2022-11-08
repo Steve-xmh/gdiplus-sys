@@ -1,23 +1,47 @@
 #![cfg(windows)]
-#![allow(non_upper_case_globals, non_camel_case_types, non_snake_case)]
+#![allow(non_upper_case_globals, non_camel_case_types, non_snake_case, clippy::upper_case_acronyms, clippy::missing_safety_doc)]
 #![cfg_attr(not(test), no_std)]
 
 use core::mem::MaybeUninit;
 
-pub use winapi::ctypes::{c_int, c_void};
-pub use winapi::shared::basetsd::{INT16, UINT16, UINT32, UINT_PTR, ULONG_PTR};
-pub use winapi::shared::guiddef::{CLSID, GUID};
-pub use winapi::shared::minwindef::{
-    BOOL, BYTE, DWORD, HINSTANCE, HMETAFILE, HRGN, LPBYTE, UINT, WORD,
-};
-pub use winapi::shared::ntdef::{CHAR, HANDLE, INT, LANGID, LPWSTR, ULONG, WCHAR};
-pub use winapi::shared::windef::{
-    HBITMAP, HDC, HENHMETAFILE, HFONT, HICON, HPALETTE, HWND, RECTL, SIZEL,
-};
-pub use winapi::shared::wtypes::PROPID;
-pub use winapi::um::commctrl::IStream;
-pub use winapi::um::wingdi::{BITMAPINFO, LOGFONTA, LOGFONTW, METAHEADER};
-pub use winapi::vc::vcruntime::size_t;
+use libc::{c_int, c_void, size_t};
+type LPBYTE = *mut libc::c_uchar;
+type INT = libc::c_int;
+type UINT = libc::c_uint;
+type INT16 = i16;
+type UINT16 = u16;
+type UINT32 = u32;
+type ULONG = libc::c_ulong;
+type WORD = u16;
+type DWORD = u32;
+type WCHAR = libc::wchar_t;
+type ULONG_PTR = *mut libc::c_ulong;
+type BYTE = libc::c_char;
+type SIZEL = SIZE;
+type CLSID = windows_sys::core::GUID;
+type UINT_PTR = libc::uintptr_t;
+type PROPID = libc::c_ulong;
+type LPWSTR = PCWSTR;
+type LANGID = libc::c_ushort;
+
+pub use windows_sys::Win32::UI::WindowsAndMessaging::*;
+pub use windows_sys::core::*;
+pub use windows_sys::Win32::Foundation::*;
+pub use windows_sys::Win32::Graphics::Gdi::*;
+pub use windows_sys::Win32::System::Com::*;
+
+// pub use winapi::shared::basetsd::{INT16, UINT16, UINT32, UINT_PTR, ULONG_PTR};
+// pub use winapi::shared::guiddef::{CLSID, GUID};
+// pub use winapi::shared::minwindef::{
+//     BOOL, BYTE, DWORD, HINSTANCE, HMETAFILE, HRGN, LPBYTE, UINT, WORD,
+// };
+// pub use winapi::shared::ntdef::{CHAR, HANDLE, INT, LANGID, LPWSTR, ULONG, WCHAR};
+// pub use winapi::shared::windef::{
+//     HBITMAP, HDC, HENHMETAFILE, HFONT, HICON, HPALETTE, HWND, RECTL, SIZEL,
+// };
+// pub use winapi::shared::wtypes::PROPID;
+// pub use winapi::um::commctrl::IStream;
+// pub use winapi::um::wingdi::{BITMAPINFO, LOGFONTA, LOGFONTW, METAHEADER};
 
 #[cfg(test)]
 mod bindgen_tests;

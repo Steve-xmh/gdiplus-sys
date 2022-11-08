@@ -12,12 +12,12 @@ categories = ["external-ffi-bindings", "no-std", "os::windows-apis"]
 include = ["/src/**/*", "/Cargo.toml", "/LICENSE", "/build.rs", "/README.md"]
 
 [dependencies]
-winapi = { version = "0.3", features = [
-    "commctrl",
-    "vcruntime",
-    "windef",
-    "wingdi",
-    "wtypes"
+libc = "*"
+windows-sys = { version = "*", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_System_Com",
+    "Win32_UI_WindowsAndMessaging",
 ]}
 
 #[build-dependencies]
