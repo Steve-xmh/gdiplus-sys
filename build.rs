@@ -2,7 +2,7 @@ fn main() {
     // Tell cargo to tell rustc to link the Gdiplus shared library.
     println!("cargo:rustc-link-lib=gdiplus");
 
-    bindgen();
+    // bindgen();
 }
 
 #[allow(dead_code)]
