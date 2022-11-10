@@ -2,10 +2,11 @@ fn main() {
     // Tell cargo to tell rustc to link the Gdiplus shared library.
     println!("cargo:rustc-link-lib=gdiplus");
 
-    // bindgen();
+    if !std::env::var("GDIP_BINDGEN").unwrap_or_default().is_empty() {
+        bindgen();
+    }
 }
 
-#[allow(dead_code)]
 fn bindgen() {
     // The bindgen::Builder is the main entry point
     // to bindgen, and lets you build up options for
@@ -106,7 +107,24 @@ fn bindgen() {
         // Unwrap the Result and panic on failure.
         .expect("Unable to generate bindings");
 
-    let mut binding_source = bindings.to_string();
+    let mut binding_source = bindings
+        .to_string()
+        .replace(
+            "pub type UINT_PTR = ::core::ffi::c_ulonglong;",
+            "pub type UINT_PTR = *mut ::core::ffi::c_ulonglong;",
+        )
+        .replace(
+            "pub type ULONG_PTR = ::core::ffi::c_ulonglong;",
+            "pub type ULONG_PTR = *mut ::core::ffi::c_ulonglong;",
+        )
+        .replace(
+            "pub type UINT_PTR = ::core::ffi::c_uint;",
+            "pub type UINT_PTR = *mut ::core::ffi::c_uint;",
+        )
+        .replace(
+            "pub type ULONG_PTR = ::core::ffi::c_ulong;",
+            "pub type ULONG_PTR = *mut ::core::ffi::c_ulong;",
+        );
 
     binding_source.insert_str(
         0,
